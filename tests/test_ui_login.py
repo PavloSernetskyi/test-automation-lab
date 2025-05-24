@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,6 +8,11 @@ from selenium.webdriver.support import expected_conditions as EC
 # Pytest fixture to set up and tear down the Chrome browser for each test
 @pytest.fixture
 def driver():
+    # Set up headless Chrome for GitHub Actions
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # 🧠 Required in CI (no display)
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     # Start a new Chrome browser instance
     driver = webdriver.Chrome()
     # Navigate to the OrangeHRM demo login page
